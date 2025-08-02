@@ -29,6 +29,18 @@
             object-fit: cover;
         }
 
+        /* Dòng chữ hướng dẫn */
+        #tapToStart {
+            position: absolute;
+            bottom: 20px;
+            color: white;
+            font-size: 20px;
+            background: rgba(0,0,0,0.5);
+            padding: 10px 20px;
+            border-radius: 10px;
+            animation: blink 1s infinite;
+        }
+
         /* Hiệu ứng chớp */
         @keyframes flash {
             from { filter: brightness(1); }
@@ -43,18 +55,25 @@
             75% { transform: translate(5px, 5px); }
             100% { transform: translate(-5px, -5px); }
         }
+
+        /* Hiệu ứng nhấp nháy cho chữ */
+        @keyframes blink {
+            0%, 50%, 100% { opacity: 1; }
+            25%, 75% { opacity: 0; }
+        }
     </style>
 </head>
 <body>
 
     <div id="jumpscare">
         <img src="creepy-gif-8.gif" alt="Jumpscare">
-        <audio id="scareSound" autoplay src="scream-81768.mp3" autoplay loop></audio>
+        <div id="tapToStart">Bấm vào màn hình để tiếp tục...</div>
+        <audio id="scareSound" src="scream-81768.mp3" autoplay loop></audio>
     </div>
 
     <script>
-        const jumpscare = document.getElementById('jumpscare');
         const scareSound = document.getElementById('scareSound');
+        const tapToStart = document.getElementById('tapToStart');
         scareSound.volume = 1.0;
 
         // Cảnh báo khi thoát trang
@@ -65,6 +84,7 @@
 
         // Khi người dùng bấm hoặc nhấn phím → bật full màn hình + phát âm thanh
         function activateJumpscare() {
+            tapToStart.style.display = 'none'; // Ẩn chữ hướng dẫn
             if (document.documentElement.requestFullscreen) {
                 document.documentElement.requestFullscreen();
             }
